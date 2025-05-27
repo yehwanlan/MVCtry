@@ -38,3 +38,8 @@ CPU處理速度
 git 一個記憶口訣：
 「先拉雲端，再丟雲端」
 「先提取 (箭頭往下)，再推送(箭頭往上)」
+
+PERSONS
+MVC	MODEL-VIEW(看到呈現的資料 與USER互動頁面)-CONTROLLER 
+MVVM MODEL-VIEW-VIEWMODEL CONTROLLER
+當MODEL 不適合 VIEW直接 顯示/編輯 的典型場合  身分驗證
