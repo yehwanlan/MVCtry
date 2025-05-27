@@ -31,7 +31,7 @@ else
 app.UseHttpsRedirection(); //使用者 使用http協定瀏覽網站，自動重導致使用https協定
 app.UseStaticFiles();//指定放置靜態文件的資料夾
 
-app.UseRouting();
+app.UseRouting();//啟用url Routing/url 
 
 app.UseAuthorization();
 

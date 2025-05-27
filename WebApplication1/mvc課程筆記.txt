@@ -1,0 +1,26 @@
+5/26晚上
+看影片 https://www.youtube.com/watch?v=_oRJ8TNcHWo
+webform 做到能修改就好
+core 改版很快
+打開vs 並更新 嘗試下載vs preview
+修改 vs vscode 預測目錄 好讓未來一致
+喔喔VS 先建立好資料夾 VScode打開資料夾 即可一同use
+解決(how All Files (Solution Explorer)) 沒顯示 課程筆記.txt問題
+5/27早上
+
+網站/服務專案 -->部屬-->WEB SERVER(WINDOWS IIS)
+.NET 不能誇平台 (純WINDOWS)
+.NET CORE 能跨平台(WINDOWS.LINUX.macOS)
+第一代 ASP =>PHP
+第二代 ASP.NET WebForm
+第三代 ASP.NET MVC
+第四代 ASP.NET CORE MVC 
+
+favicon.ico ->>改網頁小圖片
+加入現有項目
+wwwroot\favicon.png
+
+Views/Shared/_Layout.cshtml  
+---->
+找到 <head> 標籤，加入這一行：
+<link rel="icon" href="~/favicon.png" type="image/png" />
