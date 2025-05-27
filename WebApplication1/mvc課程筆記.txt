@@ -23,7 +23,10 @@ wwwroot\favicon.png
 Views/Shared/_Layout.cshtml  
 ---->
 找到 <head> 標籤，加入這一行：
+
 <link rel="icon" href="~/favicon.png" type="image/png" />
 
 使用jTable 建立single page application
 一個server  容許多少user ?? 10000人(會有個天花板數字)
+
+影響網頁執行效率的前三大因素
