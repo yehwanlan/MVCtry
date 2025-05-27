@@ -6,8 +6,8 @@ core 改版很快
 修改 vs vscode 預測目錄 好讓未來一致
 喔喔VS 先建立好資料夾 VScode打開資料夾 即可一同use
 解決(how All Files (Solution Explorer)) 沒顯示 課程筆記.txt問題
-5/27早上
 
+5/27早上
 網站/服務專案 -->部屬-->WEB SERVER(WINDOWS IIS)
 .NET 不能誇平台 (純WINDOWS)
 .NET CORE 能跨平台(WINDOWS.LINUX.macOS)
