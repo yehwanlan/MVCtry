@@ -1,0 +1,11 @@
+# 忽略 Visual Studio 設定
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET 靜態檔案暫存
+wwwroot/node_modules/
