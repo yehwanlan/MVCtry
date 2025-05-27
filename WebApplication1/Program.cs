@@ -33,7 +33,7 @@ app.UseStaticFiles();//指定放置靜態文件的資料夾
 
 app.UseRouting();//啟用url Routing/url 
 
-app.UseAuthorization();
+app.UseAuthorization();//通過身分驗證---->權限授予
 
 app.MapControllerRoute(
     name: "default",
