@@ -44,3 +44,8 @@ MVC	MODEL-VIEW(看到呈現的資料 與USER互動頁面)-CONTROLLER
 MVVM MODEL-VIEW-VIEWMODEL CONTROLLER
 當MODEL 不適合 VIEW直接 顯示/編輯 的典型場合  身分驗證
 IOC, 相依性注入(Dependency Injection, DI)
+
+SQL EXPRESS LocalDB 免費 可商用 (限制 4核心 ram 1.4GB:32位元的系統/落伍 10GB)
+SQL Developer Edition 免費  不可商用
+
+SQL SERVER障礙排除...感謝ChatGPT
