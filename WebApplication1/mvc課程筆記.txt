@@ -43,3 +43,4 @@ PERSONS
 MVC	MODEL-VIEW(看到呈現的資料 與USER互動頁面)-CONTROLLER 
 MVVM MODEL-VIEW-VIEWMODEL CONTROLLER
 當MODEL 不適合 VIEW直接 顯示/編輯 的典型場合  身分驗證
+IOC, 相依性注入(Dependency Injection, DI)
