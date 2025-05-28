@@ -94,3 +94,20 @@ ASP.NET Core 尋找 View 時，會先找 /Views/{Controller名稱}/Error.cshtml
 時常變動的東西 建成模組 跟外部開發 開模組
 
 聊到 未登入頁面/已登入頁面
+
+5/28下午
+Entity Framework 工作模式總覽
+------
+Code First
+你先寫 C# 類別，EF 幫你自動建資料表。適合新專案，表格還沒建立時。
+適合 Windows Form 開發測試。
+------
+Database First
+你先有 SQL 資料表，EF 幫你自動產生 C# 類別。適合資料庫先設計好的情境。
+用 Visual Studio「加入新項目 → ADO.NET Entity Data Model → EF Designer from database」。
+------
+Model First
+你用圖形化工具畫資料表關聯，EF 幫你產生 C# 類別和 SQL 資料表。
+比較少用，主要給設計導向專案。
+
+介紹asp.net core web 專案基本架構
