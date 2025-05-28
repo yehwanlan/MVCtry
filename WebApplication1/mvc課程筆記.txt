@@ -53,3 +53,44 @@ SQL SERVER障礙排除...感謝ChatGPT
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     @* 可以用於手機瀏覽(自動調整大小) *@
     預設安全很好(asp.net)
+------------------------------
+Razor文件(*.cshtml):html文件產生器
+
+編輯 razror文件---生成(預測保護)-->html文件
+    所以輸出至網頁的資料皆經編碼處理
+    <form>加入防偽標籤(台鐵官網 過往沒防偽標籤 程式可透過迴圈SUBMIT搶票)
+
+編輯html文件------>瀏覽器
+
+用戶驗證:HTML JavaScript
+
+用戶驗證不算驗證  有可能透過程式掠過
+
+Server:C#
+-----------------------------
+用戶端驗證 體驗及時
+server端驗證
+如何 集中式資料驗證 / 如何 集中式錯誤處理
+沒有寫名稱 預測抓index.view
+
+注意檔案結構問題
+在 ASP.NET MVC 開發中，如果網址顯示 404 或「找不到 View」錯誤，最常見原因是 Controller、View 資料夾與檔案的命名不一致。
+Controller 名稱必須以 controller 結尾（兩個 l），而 View 資料夾名稱要與 Controller 名稱去掉 controller 後一致。
+例如 FUN149controller，對應的 View 資料夾必須是 /Views/FUN149/，而動作 Index() 預設會找 /Views/FUN149/Index.cshtml。
+若檔名、資料夾或拼字大小寫錯誤，系統就會出現「找不到 View」的錯誤。
+解決方法是檢查 Controller、View 資料夾與 .cshtml 檔案是否正確命名與放置，並確定檔案已包含在專案內，重新編譯即可。
+
+了解 錯誤訊息 自訂錯誤訊息(中/英文版)
+
+有可能會到SHARED ERROR
+
+為什麼會有 Views/Shared/Error.cshtml？
+原理：
+ASP.NET Core 尋找 View 時，會先找 /Views/{Controller名稱}/Error.cshtml
+找不到時，自動往 /Views/Shared/Error.cshtml 尋找。
+好處：
+讓多個 Controller 都能共用同一個錯誤頁，不用每個 Controller 都放一份。
+
+時常變動的東西 建成模組 跟外部開發 開模組
+
+聊到 未登入頁面/已登入頁面

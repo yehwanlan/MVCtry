@@ -17,16 +17,17 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseMigrationsEndPoint();
-}
-else
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseMigrationsEndPoint();
+//}
+//else
+//{
+//    app.UseExceptionHandler("/Home/Error");
+//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//    app.UseHsts();
+//    //架設遠端 會把你當 USER 可能看不到錯誤訊息
+//}
 //app.UseMiddleware<類別 金鐘罩鐵布衫>();
 app.UseHttpsRedirection(); //使用者 使用http協定瀏覽網站，自動重導致使用https協定
 app.UseStaticFiles();//指定放置靜態文件的資料夾
@@ -39,5 +40,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
+//這兩行是ASP.NET Core MVC 跟 Razor Pages 專案最常見的「路由設定」！
+//每個 ASP.NET Core 專案都一定會用到這段，決定了你的網址（URL）怎麼對應到 Controller 或 Razor Page。
 app.Run();
