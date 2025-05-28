@@ -47,5 +47,9 @@ IOC, 相依性注入(Dependency Injection, DI)
 
 SQL EXPRESS LocalDB 免費 可商用 (限制 4核心 ram 1.4GB:32位元的系統/落伍 10GB)
 SQL Developer Edition 免費  不可商用
-
 SQL SERVER障礙排除...感謝ChatGPT
+
+5/28 早上
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+    @* 可以用於手機瀏覽(自動調整大小) *@
+    預設安全很好(asp.net)
