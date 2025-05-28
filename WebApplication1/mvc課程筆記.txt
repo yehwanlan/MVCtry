@@ -111,3 +111,18 @@ Model First
 比較少用，主要給設計導向專案。
 
 介紹asp.net core web 專案基本架構
+
+layout style 除非100%樣式會用到 可以寫 (小心首頁)
+
+如果使用SCRIPT 但宣告JQUERY在動作之後 會無法判別$
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+@section Scripts {
+    <script>
+                         $(document).ready(function(){
+                             alert("Hello MVC!");
+                         });
+    </script>
+}
+這樣飲用即可
