@@ -125,4 +125,8 @@ layout style 除非100%樣式會用到 可以寫 (小心首頁)
                          });
     </script>
 }
-這樣飲用即可
+這樣引用即可
+
+加入用戶端程式庫(FONT AWESOME)-->還會產生 libman.json-->可修改版本
+
+安裝BUNDLER
