@@ -137,3 +137,53 @@ layout style 除非100%樣式會用到 可以寫 (小心首頁)
 ASP.NET Core 內建 <environment> Tag Helper，可以自動根據開發/生產模式引用不同檔案，非常方便：
 啟動專案 會粗體(也可以右鍵 專案 設定為啟動專案)
 Scaffold-DbContext "Data Source=CR3-S07\SQLEXPRESS01;Initial Catalog=Northwind;Integrated Security=true;Encrypt=true;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -t Customers -f
+------------
+老師新建一個資料夾
+
+你學會了如何用 Scaffold-DbContext 將 SQL Server 資料庫結構自動產生成 C# 的 Model 與 DbContext，並透過 appsettings.json 和 Program.cs 正確設定多組資料庫連線字串。
+
+你了解了 partial class 的設計理念與實務用法，知道如何把 Scaffold 自動產生的 code 與自己擴充的邏輯分開維護，這樣即使重跑 Scaffold，自己的自訂功能也不會被洗掉。
+
+最後你也理解了資料庫只要一改、重跑 Scaffold 就會覆蓋原有 Model code，因此自訂邏輯一定要寫在 partial class 裡，才能讓專案維護安全又彈性。
+
+Models\NorthwindContext.cs     ← Scaffold產生 (可被洗掉)
+partial\NorthwindContext.cs    ← 你自己寫 (永遠不會被洗掉)
+         │
+         └─ 編譯時自動合成同一個 NorthwindContext
+
+資料庫結構自動變成 C# 類別（Model）
+DI 幫你自動拿到資料庫物件（DbContext）
+Controller 負責查資料、呼叫 View
+View 負責顯示 Model 裡的內容
+導覽列是入口，連結所有功能
+------------------
+
+反向工程（Scaffold-DbContext）連結資料庫 → 自動產生 Model 和 DbContext
+指令把資料庫的 Customers table 變成 C# 類別
+在 Models 資料夾看到 Customer.cs、NorthwindContext.cs
+新增 partial class（例如 NorthwindContext.Partial.cs）
+你自訂的邏輯都寫這，不會被 Scaffold 洗掉
+設定 appsettings.json
+加上 "Northwind" 的連線字串，讓程式知道要連哪個資料庫
+HomeController.cs 加入 Action
+Customers() 方法查詢資料、丟到 View
+--------------
+@inject NorthwindContext context
+<h1>客戶總數:@context.Customers.Count()人</h1>
+-------------
+右鍵CONTROLLER 
+選取 ENTITY MVC 甚至還生成VIEW  新刪修查
+
+5/29下午
+討論 CUSTOMERSCONTROLLER 
+**同步（Synchronous）和非同步（Asynchronous）**的差別簡單說就是：「要不要等到這件事做完，才能繼續做下面的事？」
+
+為什麼要用非同步？
+
+網站要同時處理很多請求時，非同步能避免「堵車」（例：資料庫查詢慢時也不會拖住其它用戶）。
+
+效能比較好，伺服器可以利用等待時間去服務其他人。
+
+.NET Core 建議 Controller 盡量都用 async/await 寫法（你現在這份就是）。
+
+函式 盡量做非同步 async 代表這是非同步方法，await 代表這裡等資料回來但不堵住主線程。
