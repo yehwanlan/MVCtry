@@ -17,6 +17,12 @@ namespace CUSTOMERWEBSITE.Controllers
         {
             _context = context;
         }
+        //learn
+        public IActionResult Index1()
+        {
+            return View();
+        }
+
 
         // GET: Customers1
         public async Task<IActionResult> Index()
