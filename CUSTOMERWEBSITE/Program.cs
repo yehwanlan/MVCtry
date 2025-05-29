@@ -1,4 +1,5 @@
 using CUSTOMERWEBSITE.Data;
+using CUSTOMERWEBSITE.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+var northwindConn = builder.Configuration.GetConnectionString("Northwind")
+    ?? throw new InvalidOperationException("Connection string 'Northwind' not found.");
+builder.Services.AddDbContext<NorthwindContext>(options =>
+    options.UseSqlServer(northwindConn));
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();

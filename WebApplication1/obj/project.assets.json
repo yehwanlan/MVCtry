@@ -2883,6 +2883,26 @@
             "rid": "win"
           }
         }
+      },
+      "CUSTOMERWEBSITE/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "8.0.16",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.16",
+          "Microsoft.AspNetCore.Identity.UI": "8.0.16",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.16",
+          "Microsoft.EntityFrameworkCore.Tools": "8.0.16"
+        },
+        "compile": {
+          "bin/placeholder/CUSTOMERWEBSITE.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CUSTOMERWEBSITE.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
@@ -8029,10 +8049,16 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "CUSTOMERWEBSITE/1.0.0": {
+      "type": "project",
+      "path": "../CUSTOMERWEBSITE/CUSTOMERWEBSITE.csproj",
+      "msbuildProject": "../CUSTOMERWEBSITE/CUSTOMERWEBSITE.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "CUSTOMERWEBSITE >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 8.0.16",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.16",
       "Microsoft.AspNetCore.Identity.UI >= 8.0.16",
@@ -8073,7 +8099,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\project\\mvc_try\\WebApplication1\\CUSTOMERWEBSITE\\CUSTOMERWEBSITE.csproj": {
+              "projectPath": "C:\\project\\mvc_try\\WebApplication1\\CUSTOMERWEBSITE\\CUSTOMERWEBSITE.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

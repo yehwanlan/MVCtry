@@ -31,4 +31,8 @@
     <None Include="bundleconfig.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CUSTOMERWEBSITE\CUSTOMERWEBSITE.csproj" />
+  </ItemGroup>
+
 </Project>
