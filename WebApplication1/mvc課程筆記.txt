@@ -208,3 +208,25 @@ List
 IQueryable → 計畫與溝通階段（查詢尚未執行）
 IEnumerable → 已經開始給資料（可以一個一個拿）
 List → 全部資料一次到手（查詢已經執行且結果固定）
+
+善用        
+[HttpPost]
+[ValidateAntiForgeryToken]
+
+有時候為了 代碼可讀性 會想修改ID---->CUSTOMERID 要找出所有ID
+
+ <td>
+    <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
+    <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
+    <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
+</td>
+cnoontroller沒寫  就會用預設的
+
+只要你想自訂參數名，就要路由 pattern、Action 參數、超連結 route-value 全部一致
+
+在controller上方 [Route("/Customers1/{action=Index}/{CustomersID?}")]
+
+這其實會讓所有這個 Controller 裡的 Action 都以 /Customers1/{action}/{CustomersID?} 為路由。
+這和 Program.cs 的 MapControllerRoute 是類似的功能，但會優先採用 Attribute Routing。
+
+URLhelper

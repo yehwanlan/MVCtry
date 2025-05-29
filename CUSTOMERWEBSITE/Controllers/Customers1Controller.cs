@@ -9,6 +9,7 @@ using CUSTOMERWEBSITE.Models;
 
 namespace CUSTOMERWEBSITE.Controllers
 {
+    [Route("/Customers1/{action=Index}/{CustomersID?}")]
     public class Customers1Controller : Controller
     {
         private readonly NorthwindContext _context;
@@ -22,8 +23,8 @@ namespace CUSTOMERWEBSITE.Controllers
         {
             return View();
         }
-
-
+        [HttpGet]
+      
         // GET: Customers1
         public async Task<IActionResult> Index()
         {
@@ -31,15 +32,15 @@ namespace CUSTOMERWEBSITE.Controllers
         }
 
         // GET: Customers1/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(string CustomersID)
         {
-            if (id == null)
+            if (CustomersID == null)
             {
                 return NotFound();
             }
 
             var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+                .FirstOrDefaultAsync(m => m.CustomerId == CustomersID);
             if (customer == null)
             {
                 return NotFound();
@@ -71,14 +72,14 @@ namespace CUSTOMERWEBSITE.Controllers
         }
 
         // GET: Customers1/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string CustomersID)
         {
-            if (id == null)
+            if (CustomersID == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(CustomersID);
             if (customer == null)
             {
                 return NotFound();
@@ -91,9 +92,9 @@ namespace CUSTOMERWEBSITE.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CustomerId,CompanyName,ContactName,ContactTitle,Address,City,Region,PostalCode,Country,Phone,Fax")] Customer customer)
+        public async Task<IActionResult> Edit(string CustomersID, [Bind("CustomerId,CompanyName,ContactName,ContactTitle,Address,City,Region,PostalCode,Country,Phone,Fax")] Customer customer)
         {
-            if (id != customer.CustomerId)
+            if (CustomersID != customer.CustomerId)
             {
                 return NotFound();
             }
@@ -122,15 +123,15 @@ namespace CUSTOMERWEBSITE.Controllers
         }
 
         // GET: Customers1/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string CustomersID)
         {
-            if (id == null)
+            if (CustomersID == null)
             {
                 return NotFound();
             }
 
             var customer = await _context.Customers
-                .FirstOrDefaultAsync(m => m.CustomerId == id);
+                .FirstOrDefaultAsync(m => m.CustomerId == CustomersID);
             if (customer == null)
             {
                 return NotFound();
@@ -142,9 +143,9 @@ namespace CUSTOMERWEBSITE.Controllers
         // POST: Customers1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string CustomersID)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(CustomersID);
             if (customer != null)
             {
                 _context.Customers.Remove(customer);
@@ -154,9 +155,9 @@ namespace CUSTOMERWEBSITE.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(string id)
+        private bool CustomerExists(string CustomerID)
         {
-            return _context.Customers.Any(e => e.CustomerId == id);
+            return _context.Customers.Any(e => e.CustomerId == CustomerID);
         }
     }
 }
