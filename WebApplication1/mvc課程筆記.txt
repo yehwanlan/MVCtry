@@ -130,3 +130,9 @@ layout style 除非100%樣式會用到 可以寫 (小心首頁)
 加入用戶端程式庫(FONT AWESOME)-->還會產生 libman.json-->可修改版本
 
 安裝BUNDLER
+精簡版code 相對來說很能除錯
+
+5/29
+可以設定 開發者模式
+ASP.NET Core 內建 <environment> Tag Helper，可以自動根據開發/生產模式引用不同檔案，非常方便：
+啟動專案 會粗體
