@@ -230,3 +230,5 @@ cnoontroller沒寫  就會用預設的
 這和 Program.cs 的 MapControllerRoute 是類似的功能，但會優先採用 Attribute Routing。
 
 URLhelper
+
+6/2下午
