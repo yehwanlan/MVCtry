@@ -1,0 +1,15 @@
+﻿@model CUSTOMERWEBSITE.ViewModels.ContactViewModels
+
+@{
+    ViewData["Title"] = "Contact Result";
+}
+
+<h2>感謝您的聯絡！</h2>
+<p>我們已收到您的資料：</p>
+<ul>
+    <li><strong>姓名：</strong> @Model.Name</li>
+    <li><strong>Email：</strong> @Model.Email</li>
+    <li><strong>電話：</strong> @Model.Phone</li>
+    <li><strong>留言：</strong> @Model.Message</li>
+</ul>
+<a class="btn btn-primary" asp-action="Index" asp-controller="Home">回首頁</a>

@@ -45,10 +45,13 @@ namespace CUSTOMERWEBSITE.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                // 導到 ContactResult 頁面，顯示剛填的資料
+                return View("ContactResult", cvm);
             }
+            // 失敗就回原表單頁面
             return View(cvm);
         }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -56,5 +59,6 @@ namespace CUSTOMERWEBSITE.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }
