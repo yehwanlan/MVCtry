@@ -232,3 +232,12 @@ cnoontroller沒寫  就會用預設的
 URLhelper
 
 6/2下午
+
+評估網頁
+功能
+美觀
+用戶體驗(畫面會不會閃、換頁  AJAX呼叫才不會閃爍   HTTP呼叫 會換頁)
+用快取 可加速內容取得、避免網頁做太大
+SELECT TAH HELPER
+使用CACHETAGHELPER
+快取資料原則 常用不常 取得成本高 @TIMESPAN.FROMSECONDS(60)--->60秒內瀏覽的用戶都會看到相同的日期
