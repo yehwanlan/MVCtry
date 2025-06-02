@@ -1,6 +1,7 @@
 using CUSTOMERWEBSITE.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CUSTOMERWEBSITE.ViewModels;
 
 namespace CUSTOMERWEBSITE.Controllers
 {
@@ -31,6 +32,24 @@ namespace CUSTOMERWEBSITE.Controllers
         {
             return View();
         }
+
+        // GET: HOME/Contact
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Contact(ContactViewModels cvm)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(cvm);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,0 +1,22 @@
+﻿@model CUSTOMERWEBSITE.ViewModels.ContactViewModels
+
+<form asp-controller="Home" asp-action="Contact" method="post">
+    <div class="container">
+        <div class="mb-3 text-center">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="請輸入姓名" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3 text-center">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="請輸入email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3 text-center">
+            <label asp-for="Phone" class="form-label"></label>
+            <input asp-for="Phone" class="form-control" placeholder="請輸入連絡電話" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">送出</button>
+    </div>
+</form>

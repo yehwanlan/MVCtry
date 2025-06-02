@@ -241,3 +241,5 @@ URLhelper
 SELECT TAH HELPER
 使用CACHETAGHELPER
 快取資料原則 常用不常 取得成本高 @TIMESPAN.FROMSECONDS(60)--->60秒內瀏覽的用戶都會看到相同的日期
+
+雙向繫結
