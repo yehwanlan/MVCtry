@@ -19,6 +19,7 @@ namespace CUSTOMERWEBSITE.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("SessionKey", "Fuen149的Session資料");
             ViewBag.Test = "測試";
             ViewBag.ispan149 = "全端班";
             ViewBag.Country = _dc.Customers.OrderBy(c => c.CustomerId).Last();
