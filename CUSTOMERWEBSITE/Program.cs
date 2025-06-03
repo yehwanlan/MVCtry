@@ -6,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -16,6 +17,14 @@ var northwindConn = builder.Configuration.GetConnectionString("Northwind")
 builder.Services.AddDbContext<NorthwindContext>(options =>
     options.UseSqlServer(northwindConn));
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".CustomersWebsite.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+});
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -31,7 +40,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -40,18 +48,22 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();        // <<<< 開啟 Session（這一行很重要）
+app.UseAuthentication(); // <<<< 若有 Identity 登入才需要
 app.UseAuthorization();
 
+// 預設路由
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
 
+// 客製路由（範例：客戶專用路由，如果你真的需要）
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Customers1}/{action=Index}/{CustomersID?}");
+    name: "customers",
+    pattern: "customers1/{action=Index}/{CustomersID?}",
+    defaults: new { controller = "Customers1" }
+);
 
 app.MapRazorPages();
-
 
 app.Run();

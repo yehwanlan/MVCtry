@@ -2,6 +2,7 @@ using CUSTOMERWEBSITE.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using CUSTOMERWEBSITE.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CUSTOMERWEBSITE.Controllers
 {
@@ -18,8 +19,14 @@ namespace CUSTOMERWEBSITE.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Test = "測試";
+            ViewBag.ispan149 = "全端班";
+            ViewBag.Country = _dc.Customers.OrderBy(c => c.CustomerId).Last();
+            ViewBag.Country1 = new SelectList(_dc.Customers.Select(c => c.Country).Distinct());
+            ViewBag.CustomerCount = $"alert('客戶人數:{_dc.Customers.Count()}')";
             return View();
         }
+
 
         public IActionResult Customers()
         {
@@ -39,25 +46,26 @@ namespace CUSTOMERWEBSITE.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Contact(ContactViewModels cvm)
-        {
-            if (ModelState.IsValid)
-            {
-                // 導到 ContactResult 頁面，顯示剛填的資料
-                return View("ContactResult", cvm);
-            }
-            // 失敗就回原表單頁面
-            return View(cvm);
-        }
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Contact(ContactViewModels cvm)
+        {
+            System.Diagnostics.Debug.WriteLine("已進入 Contact Controller Action！");
+            System.Diagnostics.Debug.WriteLine($"Name: {cvm.Name}, Email: {cvm.Email}, Phone: {cvm.Phone}");
+
+            if (ModelState.IsValid)
+            {
+                // TODO: 資料庫寫入 contact
+                return RedirectToAction("index");
+            }
+            return View(cvm);
         }
 
     }

@@ -243,3 +243,54 @@ SELECT TAH HELPER
 快取資料原則 常用不常 取得成本高 @TIMESPAN.FROMSECONDS(60)--->60秒內瀏覽的用戶都會看到相同的日期
 
 雙向繫結、server端 生到 客戶端
+
+6/3早上
+
+前端驗證「有跟沒有一樣」的意義
+
+對的部分：安全性完全不能靠前端，因為會被繞過。
+
+不對的部分：前端驗證可以「減少誤會」和「提升用戶體驗」。你一填錯馬上提示，使用者很快就能修正，不用等頁面重新整理。
+
+結論：
+
+前端驗證是體驗，後端驗證是安全。
+
+開發時通常兩個都要做，但只有後端驗證是「絕對必要」。
+
+資料驗證 就會引用
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+增加前端驗證 減少畫面重製 的閃爍
+SPA（Single Page Application）體驗的關鍵：「前端驗證可減少頁面刷新，讓使用者感覺流暢、不會閃一下又回來、填資料壓力小」。
+白名單:明列接收的欄位
+黑名單:明列不接收的欄位
+
+先白再黑
+
+[Bind("Name,Email")]
+只把 Name、Email 兩個欄位從前端表單帶進來，其他不管（防止 Overposting）。
+
+jquery freeze header
+
+6/3下午
+
+限定 帳號信箱 字串長度 可以防止一些攻擊
+
+dynamic 動態語言
+
+
+ViewBag.CustomerCount = $"alert('客戶人數:{_dc.Customers.Count()}')";
+
+
+@section Scripts {
+    <script>
+        @Html.Raw(ViewBag.CustomerCount)
+    </script>
+}
+JAVAscript只要被編碼後就不能執行了
+網頁最常見的攻擊 就是javascript
+
+ Session Cookie 實際上只是一個包含 Session ID 的標識符，真正的數據存儲在服務器端。
+ 這種設計既保證了安全性（敏感數據不會暴露在客戶端），又實現了狀態管理（HTTP 本身是無狀態的）。
