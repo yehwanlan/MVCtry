@@ -357,3 +357,5 @@ Products.cs 修改
 
             return View(products);
         }
+
+如何顯示不同table的多個欄位
