@@ -358,4 +358,10 @@ Products.cs 修改
             return View(products);
         }
 
-如何顯示不同table的多個欄位
+如何顯示不同table的多個欄位?
+
+
+6/4下午
+
+如何直接套用別人的模板(start bootstrap sb admin2)
+JTable 
