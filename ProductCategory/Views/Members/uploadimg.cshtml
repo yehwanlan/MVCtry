@@ -1,0 +1,354 @@
+﻿@{
+    ViewData["Title"] = "會員頭像上傳";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <h2 class="text-center my-4">📸 會員頭像上傳</h2>
+        <div class="card shadow rounded-4 p-4 mb-4">
+            <div class="upload-area mb-4" id="uploadArea">
+                <div class="upload-icon" style="font-size:2rem; color:#667eea;">📁</div>
+                <div class="upload-text mb-2">點擊或拖拽圖片到這裡</div>
+                <div class="upload-hint mb-2 text-secondary small">支援 JPG、PNG、GIF 格式，最大 5MB</div>
+                <button class="btn btn-gradient" onclick="document.getElementById('fileInput').click()">
+                    選擇圖片
+                </button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" style="display:none">
+            <div class="progress-bar mb-2" id="progressBar" style="display: none; height:8px;">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="upload-status mb-2" id="uploadStatus"></div>
+            <div class="preview-container" id="previewContainer" style="display:none;">
+                <h5>預覽圖片</h5>
+                <div class="preview-grid row" id="previewGrid"></div>
+                <button class="btn btn-primary mt-3" id="uploadAvatarBtn">上傳頭像</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .upload-area {
+        border: 3px dashed #667eea;
+        border-radius: 15px;
+        padding: 40px 0;
+        text-align: center;
+        background: rgba(102, 126, 234, 0.05);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #764ba2;
+            background: rgba(118, 75, 162, 0.09);
+            transform: translateY(-2px) scale(1.02);
+        }
+
+    .btn-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 25px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+        .btn-gradient:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 4px 16px #667eea44;
+        }
+
+    .preview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .preview-item {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #f8f9fa;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+        transition: transform 0.3s;
+    }
+
+    .preview-img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .remove-btn {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 13px;
+        line-height: 24px;
+        cursor: pointer;
+    }
+
+    .progress-bar {
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 3px;
+        width: 0%;
+        transition: width 0.2s;
+    }
+
+    .upload-status.success {
+        background: #e8faee;
+        color: #27ae60;
+        border-left: 4px solid #27ae60;
+    }
+
+    .upload-status.error {
+        background: #ffeaea;
+        color: #c0392b;
+        border-left: 4px solid #c0392b;
+    }
+</style>
+
+@section Scripts {
+<script>
+    class ImageUploader {
+        constructor() {
+            this.uploadArea = document.getElementById('uploadArea');
+            this.fileInput = document.getElementById('fileInput');
+            this.previewContainer = document.getElementById('previewContainer');
+            this.previewGrid = document.getElementById('previewGrid');
+            this.progressBar = document.getElementById('progressBar');
+            this.progressFill = document.getElementById('progressFill');
+            this.uploadStatus = document.getElementById('uploadStatus');
+            this.uploadedFiles = [];
+            this.maxFileSize = 5 * 1024 * 1024; // 5MB
+            this.allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+            this.initEventListeners();
+        }
+
+        initEventListeners() {
+            // 點擊上傳區域
+            this.uploadArea.addEventListener('click', () => {
+                this.fileInput.click();
+            });
+
+            // 文件選擇
+            this.fileInput.addEventListener('change', (e) => {
+                this.handleFiles(e.target.files);
+            });
+
+            // 拖拽事件
+            this.uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                this.uploadArea.classList.add('dragover');
+            });
+
+            this.uploadArea.addEventListener('dragleave', () => {
+                this.uploadArea.classList.remove('dragover');
+            });
+
+            this.uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                this.uploadArea.classList.remove('dragover');
+                this.handleFiles(e.dataTransfer.files);
+            });
+        }
+
+        handleFiles(files) {
+            const validFiles = [];
+            for (let file of files) {
+                if (this.validateFile(file)) {
+                    validFiles.push(file);
+                }
+            }
+            if (validFiles.length > 0) {
+                this.uploadFiles(validFiles);
+            }
+        }
+
+        validateFile(file) {
+            if (!this.allowedTypes.includes(file.type)) {
+                this.showStatus(`檔案 ${file.name} 格式不支援`, 'error');
+                return false;
+            }
+            if (file.size > this.maxFileSize) {
+                this.showStatus(`檔案 ${file.name} 超過 5MB 限制`, 'error');
+                return false;
+            }
+            return true;
+        }
+
+        async uploadFiles(files) {
+            this.showProgress();
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                try {
+                    await this.simulateUpload(file, i, files.length);
+                    this.addPreview(file);
+                    this.uploadedFiles.push({
+                        file: file,
+                        url: URL.createObjectURL(file),
+                        uploadTime: new Date()
+                    });
+                } catch (error) {
+                    this.showStatus(`上傳 ${file.name} 失敗: ${error.message}`, 'error');
+                }
+            }
+            this.hideProgress();
+            this.showStatus(`成功上傳 ${files.length} 個檔案`, 'success');
+            this.showPreviewContainer();
+        }
+
+        simulateUpload(file, index, total) {
+            return new Promise((resolve) => {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 20;
+                    const totalProgress = ((index + progress / 100) / total) * 100;
+                    this.updateProgress(Math.min(totalProgress, 100));
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
+
+        addPreview(file) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            const img = document.createElement('img');
+            img.className = 'preview-img';
+            img.src = URL.createObjectURL(file);
+            const info = document.createElement('div');
+            info.className = 'preview-info';
+            info.innerHTML = `
+                <div>${file.name}</div>
+                <div>${this.formatFileSize(file.size)}</div>
+            `;
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = () => this.removePreview(previewItem, file);
+
+            previewItem.appendChild(img);
+            previewItem.appendChild(info);
+            previewItem.appendChild(removeBtn);
+
+            this.previewGrid.appendChild(previewItem);
+        }
+
+        removePreview(previewItem, file) {
+            previewItem.remove();
+            this.uploadedFiles = this.uploadedFiles.filter(f => f.file !== file);
+            if (this.previewGrid.children.length === 0) {
+                this.previewContainer.style.display = 'none';
+            }
+        }
+
+        showProgress() {
+            this.progressBar.style.display = 'block';
+            this.updateProgress(0);
+        }
+
+        hideProgress() {
+            setTimeout(() => {
+                this.progressBar.style.display = 'none';
+            }, 500);
+        }
+
+        updateProgress(percent) {
+            this.progressFill.style.width = percent + '%';
+        }
+
+        showStatus(message, type) {
+            this.uploadStatus.textContent = message;
+            this.uploadStatus.className = `upload-status ${type}`;
+            this.uploadStatus.style.display = 'block';
+            setTimeout(() => {
+                this.uploadStatus.style.display = 'none';
+            }, 3000);
+        }
+
+        showPreviewContainer() {
+            this.previewContainer.style.display = 'block';
+        }
+
+        formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        getUploadedFiles() {
+            return this.uploadedFiles;
+        }
+
+        clearAllFiles() {
+            this.uploadedFiles = [];
+            this.previewGrid.innerHTML = '';
+            this.previewContainer.style.display = 'none';
+            this.showStatus('已清空所有檔案', 'success');
+        }
+    }
+
+    // 初始化上傳器
+    const imageUploader = new ImageUploader();
+
+    // 上傳到後端
+    document.getElementById('uploadAvatarBtn').addEventListener('click', async function() {
+        const uploadedFiles = imageUploader.getUploadedFiles();
+        if (!uploadedFiles.length) {
+            alert('請先選擇圖片！');
+            return;
+        }
+        const file = uploadedFiles[0].file; // 只上傳第一張
+        const memberId = 1; // 你可以改成動態會員 ID
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('memberId', memberId);
+
+        try {
+            const res = await fetch('/Members/UploadAvatar', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg);
+            }
+
+            const data = await res.json();
+            // 將上傳成功的新頭像網址設給預覽圖
+            document.querySelector('.preview-img').src = data.url;
+            alert('頭像上傳成功！');
+        } catch (err) {
+            alert('上傳失敗：' + err.message);
+        }
+    });
+</script>
+}

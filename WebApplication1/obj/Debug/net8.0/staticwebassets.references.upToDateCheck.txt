@@ -6,3 +6,4 @@ C:\project\mvc_try\WebApplication1\CUSTOMERWEBSITE\obj\Debug\net8.0\staticwebass
 C:\project\mvc_try\WebApplication1\CUSTOMERWEBSITE\obj\Debug\net8.0\staticwebassets.build.json
 C:\project\mvc_try\WebApplication1\CUSTOMERWEBSITE\obj\Debug\net8.0\staticwebassets.build.json
 C:\project\mvc_try\WebApplication1\CUSTOMERWEBSITE\obj\Debug\net8.0\staticwebassets.build.json
+C:\project\mvc_try\WebApplication1\CUSTOMERWEBSITE\obj\Debug\net8.0\staticwebassets.build.json

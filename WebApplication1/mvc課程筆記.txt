@@ -365,3 +365,30 @@ Products.cs 修改
 
 如何直接套用別人的模板(start bootstrap sb admin2)
 JTable 
+
+
+6/5 早上
+建立DataTable
+
+@@media (要用兩個@@
+ @@keyframes slideIn (要用兩個@@
+
+局部檢視 圖片
+
+6/5下午
+
+上傳檔案功能enctype
+加入檔案上傳html元素
+
+ConnectionStrings 只能有一組！
+多個連線字串要用 key-value 放同一個物件裡
+
+適合 MVC Razor View 的完整 code，可以直接貼進
+Views/Members/UploadImg.cshtml，
+不需 head、body、html，只保留容器、CSS、JS。
+
+你架構已經是標準的 ASP.NET Core MVC（有 _Layout.cshtml），
+導覽列已經寫在 _Layout，只需要在你的 uploadimg.cshtml 裡
+「保留主要內容區塊」就好，不用再包 <html>、<body>、<head>！
+
+sso

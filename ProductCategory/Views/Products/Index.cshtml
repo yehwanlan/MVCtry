@@ -87,45 +87,6 @@
         </div>
     </div>
 
-    <!-- 搜尋和篩選區域 -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                                <input type="text" class="form-control" placeholder="搜尋產品名稱..." id="searchInput">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select" id="categoryFilter">
-                                <option value="">所有類別</option>
-                                <!-- 這裡可以動態載入類別選項 -->
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select" id="stockFilter">
-                                <option value="">所有庫存狀態</option>
-                                <option value="instock">有庫存</option>
-                                <option value="lowstock">庫存不足</option>
-                                <option value="outstock">缺貨</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
-                                <i class="fas fa-eraser me-1"></i>清除
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- 產品表格區域 -->
     <div class="row">
         <div class="col-12">
@@ -135,64 +96,28 @@
                         <i class="fas fa-list me-2"></i>產品列表
                     </h5>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped mb-0" id="productTable">
                             <thead class="table-dark">
                                 <tr>
-                                    <th class="sortable" data-column="ProductName">
-                                        <i class="fas fa-tag me-1"></i>
-                                        @Html.DisplayNameFor(model => model.ProductName)
-                                        <i class="fas fa-sort ms-1"></i>
-                                    </th>
-                                    <th class="sortable" data-column="SupplierId">
-                                        <i class="fas fa-truck me-1"></i>
-                                        供應商ID
-                                        <i class="fas fa-sort ms-1"></i>
-                                    </th>
-                                    <th>
-                                        <i class="fas fa-box me-1"></i>
-                                        @Html.DisplayNameFor(model => model.QuantityPerUnit)
-                                    </th>
-                                    <th class="sortable" data-column="UnitPrice">
-                                        <i class="fas fa-dollar-sign me-1"></i>
-                                        @Html.DisplayNameFor(model => model.UnitPrice)
-                                        <i class="fas fa-sort ms-1"></i>
-                                    </th>
-                                    <th class="sortable" data-column="UnitsInStock">
-                                        <i class="fas fa-warehouse me-1"></i>
-                                        庫存量
-                                        <i class="fas fa-sort ms-1"></i>
-                                    </th>
-                                    <th>
-                                        <i class="fas fa-shopping-cart me-1"></i>
-                                        訂購中
-                                    </th>
-                                    <th>
-                                        <i class="fas fa-level-down-alt me-1"></i>
-                                        再訂購點
-                                    </th>
-                                    <th>
-                                        <i class="fas fa-power-off me-1"></i>
-                                        狀態
-                                    </th>
-                                    <th>
-                                        <i class="fas fa-folder me-1"></i>
-                                        類別
-                                    </th>
-                                    <th class="text-center">
-                                        <i class="fas fa-cogs me-1"></i>
-                                        操作
-                                    </th>
+                                    <th><i class="fas fa-tag me-1"></i>產品名稱</th>
+                                    <th><i class="fas fa-truck me-1"></i>供應商ID</th>
+                                    <th><i class="fas fa-box me-1"></i>包裝規格</th>
+                                    <th><i class="fas fa-dollar-sign me-1"></i>單價</th>
+                                    <th><i class="fas fa-warehouse me-1"></i>庫存量</th>
+                                    <th><i class="fas fa-shopping-cart me-1"></i>訂購中</th>
+                                    <th><i class="fas fa-level-down-alt me-1"></i>再訂購點</th>
+                                    <th><i class="fas fa-power-off me-1"></i>狀態</th>
+                                    <th><i class="fas fa-folder me-1"></i>類別</th>
+                                    <th><i class="fas fa-cogs me-1"></i>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
                                     <tr>
-                                        <td>
-                                            <strong>@Html.DisplayFor(modelItem => item.ProductName)</strong>
-                                        </td>
+                                        <td><strong>@Html.DisplayFor(modelItem => item.ProductName)</strong></td>
                                         <td>
                                             <span class="badge bg-secondary">
                                                 @Html.DisplayFor(modelItem => item.SupplierId)
@@ -205,13 +130,8 @@
                                             </span>
                                         </td>
                                         <td>
-                                            @{
-                                                var stockClass = item.UnitsInStock == 0 ? "danger" :
-                                                item.UnitsInStock <= item.ReorderLevel ? "warning" : "success";
-                                            }
-                                            <span class="badge bg-@stockClass">
-                                                @Html.DisplayFor(modelItem => item.UnitsInStock)
-                                            </span>
+                                            @* 這裡只顯示數字，方便搜尋與排序 *@
+                                            @Html.DisplayFor(modelItem => item.UnitsInStock)
                                         </td>
                                         <td>@Html.DisplayFor(modelItem => item.UnitsOnOrder)</td>
                                         <td>
@@ -238,7 +158,7 @@
                                                 @Html.DisplayFor(modelItem => item.Category.CategoryId)
                                             </span>
                                         </td>
-                                        <td class="text-center">
+                                        <td>
                                             <div class="btn-group" role="group">
                                                 <a asp-action="Details" asp-route-id="@item.ProductId"
                                                    class="btn btn-sm btn-outline-info" title="查看詳情">
@@ -261,25 +181,16 @@
                         </table>
                     </div>
                 </div>
-
-                <!-- 分頁區域 -->
-                <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">
-                            顯示 @Model.Count() 個產品
-                        </small>
-                        <nav>
-                            <!-- 這裡可以加入分頁導航 -->
-                            <small class="text-muted">第 1 頁，共 1 頁</small>
-                        </nav>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 自定義樣式 -->
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+
 <style>
     .display-6 {
         font-weight: 600;
@@ -300,15 +211,6 @@
         vertical-align: middle;
     }
 
-    .sortable {
-        cursor: pointer;
-        user-select: none;
-    }
-
-    .sortable:hover {
-        background-color: rgba(255,255,255,0.1);
-    }
-
     .btn-group .btn {
         margin: 0 1px;
     }
@@ -321,51 +223,206 @@
         background-color: rgba(0,0,0,.02);
     }
 
+    #productTable th:nth-child(3), #productTable th:nth-child(4), #productTable th:nth-child(5), #productTable th:nth-child(6),
+    #productTable td:nth-child(3), #productTable td:nth-child(4), #productTable td:nth-child(5), #productTable td:nth-child(6) {
+        text-align: right;
+    }
+
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        color: #6c757d;
+        font-size: 0.875rem;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        margin-top: 1rem;
+    }
+
+    .dataTables_wrapper .dataTables_length select,
+    .dataTables_wrapper .dataTables_filter input {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        margin-left: 0.5rem;
+    }
+
+    .dt-buttons {
+        margin-bottom: 1rem;
+    }
+
+    .dt-button {
+        margin-right: 0.5rem;
+    }
+
     @@media (max-width: 768px) {
         .btn-group {
             flex-direction: column;
         }
 
-        .btn-group .btn {
-            margin: 1px 0;
-        }
+            .btn-group .btn {
+                margin: 1px 0;
+            }
     }
 </style>
 
-<!-- JavaScript 功能 -->
-<script>
-    // 搜尋功能
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        const searchTerm = this.value.toLowerCase();
-        const tableRows = document.querySelectorAll('#productTable tbody tr');
+<!-- jQuery 與 Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables Core + Bootstrap5 -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<!-- Buttons plugins -->
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
-        tableRows.forEach(row => {
-            const productName = row.cells[0].textContent.toLowerCase();
-            if (productName.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
+<script>
+    $(document).ready(function() {
+        // ======== 自訂庫存狀態篩選器 ========
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var stockFilter = $('#stockStatusFilter').val();
+                var unitsInStock = parseInt(data[4]) || 0; // 第5欄是庫存量
+                var reorderLevel = parseInt(data[6]) || 0; // 第7欄是再訂購點
+
+                if (!stockFilter || stockFilter === "") return true;
+                if (stockFilter === "有庫存")    return unitsInStock > 0;
+                if (stockFilter === "庫存不足")  return unitsInStock <= reorderLevel;
+                if (stockFilter === "缺貨")      return unitsInStock === 0;
+                return true;
+            }
+        );
+
+        // ======== 自訂狀態排序 ========
+        $.fn.dataTable.ext.type.order['status-sort-pre'] = function(data) {
+            return data.includes('正常') ? 1 : 0;
+        };
+        $.fn.dataTable.ext.type.order['currency-pre'] = function(data) {
+            var num = data.toString().replace(/[$,\s]/g, '');
+            return parseFloat(num) || 0;
+        };
+
+        var table = $('#productTable').DataTable({
+            "processing": true,
+            "responsive": true,
+            "autoWidth": false,
+            "pageLength": 25,
+            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "全部"]],
+            "order": [[0, "asc"]],
+            "columnDefs": [
+                { "targets": -1, "orderable": false, "searchable": false, "className": "text-center" },
+                { "targets": [1, 7, 8], "className": "text-center" },
+                { "targets": [3], "type": "currency", "orderable": true },
+                { "targets": [4], "type": "num" },
+                { "targets": [5], "type": "num" },
+                { "targets": [6], "type": "num", "orderable": true },
+                { "targets": [7], "type": "status-sort" }
+            ],
+            "dom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                   "<'row'<'col-sm-12 col-md-12'B>>" +
+                   "<'row'<'col-sm-12'tr>>" +
+                   "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            "buttons": [
+                {
+                    extend: 'excel',
+                    text: '<i class="fas fa-file-excel"></i> 匯出 Excel',
+                    className: 'btn btn-success btn-sm',
+                    title: '產品清單_' + new Date().toISOString().slice(0,10)
+                },
+                {
+                    extend: 'csv',
+                    text: '<i class="fas fa-file-csv"></i> 匯出 CSV',
+                    className: 'btn btn-info btn-sm',
+                    title: '產品清單_' + new Date().toISOString().slice(0,10)
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fas fa-print"></i> 列印',
+                    className: 'btn btn-secondary btn-sm',
+                    title: '產品清單'
+                }
+            ],
+            "language": {
+                "processing": "處理中...",
+                "loadingRecords": "載入中...",
+                "lengthMenu": "顯示 _MENU_ 筆記錄",
+                "zeroRecords": "沒有找到符合的記錄",
+                "info": "顯示第 _START_ 至 _END_ 筆記錄，共 _TOTAL_ 筆",
+                "infoEmpty": "顯示第 0 至 0 筆記錄，共 0 筆",
+                "infoFiltered": "(從 _MAX_ 筆記錄中過濾)",
+                "search": "搜尋:",
+                "paginate": {
+                    "first": "第一頁",
+                    "previous": "上一頁",
+                    "next": "下一頁",
+                    "last": "最後一頁"
+                },
+                "aria": {
+                    "sortAscending": ": 升序排列",
+                    "sortDescending": ": 降序排列"
+                },
+                "buttons": {
+                    "copy": "複製",
+                    "print": "列印",
+                    "excel": "Excel",
+                    "csv": "CSV"
+                }
+            },
+            "initComplete": function() {
+                addCustomFilters();
             }
         });
-    });
 
-    // 清除篩選
-    function clearFilters() {
-        document.getElementById('searchInput').value = '';
-        document.getElementById('categoryFilter').value = '';
-        document.getElementById('stockFilter').value = '';
+        // ======== 自訂下拉篩選元件 ========
+        function addCustomFilters() {
+            var stockFilter = $('<div class="col-md-3 mb-2">' +
+                '<select class="form-select form-select-sm" id="stockStatusFilter">' +
+                '<option value="">所有庫存狀態</option>' +
+                '<option value="有庫存">有庫存</option>' +
+                '<option value="庫存不足">庫存不足</option>' +
+                '<option value="缺貨">缺貨</option>' +
+                '</select>' +
+                '</div>');
+            var statusFilter = $('<div class="col-md-3 mb-2">' +
+                '<select class="form-select form-select-sm" id="productStatusFilter">' +
+                '<option value="">所有產品狀態</option>' +
+                '<option value="正常">正常</option>' +
+                '<option value="已停產">已停產</option>' +
+                '</select>' +
+                '</div>');
+            var clearFilter = $('<div class="col-md-2 mb-2">' +
+                '<button class="btn btn-outline-secondary btn-sm w-100" id="clearFilters">' +
+                '<i class="fas fa-eraser me-1"></i>清除篩選' +
+                '</button>' +
+                '</div>');
+            var filterRow = $('<div class="row mb-3"></div>');
+            filterRow.append(stockFilter).append(statusFilter).append(clearFilter);
+            $('#productTable_wrapper').prepend(filterRow);
 
-        const tableRows = document.querySelectorAll('#productTable tbody tr');
-        tableRows.forEach(row => {
-            row.style.display = '';
-        });
-    }
+            $('#stockStatusFilter').on('change', function() {
+                table.draw(); // 觸發自訂過濾
+            });
+            $('#productStatusFilter').on('change', function() {
+                table.column(7).search(this.value).draw(); // 直接 DataTables 內建搜尋
+            });
+            $('#clearFilters').on('click', function() {
+                $('#stockStatusFilter').val('');
+                $('#productStatusFilter').val('');
+                table.search('').columns().search('').draw();
+                table.draw();
+            });
+        }
 
-    // 表格排序功能
-    document.querySelectorAll('.sortable').forEach(header => {
-        header.addEventListener('click', function() {
-            // 這裡可以實作排序邏輯
-            console.log('排序欄位:', this.dataset.column);
-        });
+        window.refreshTable = function() {
+            table.ajax.reload();
+        };
     });
 </script>
